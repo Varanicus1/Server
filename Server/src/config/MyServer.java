@@ -21,6 +21,7 @@ public class MyServer {
 		//Input
 		String strenemy = "", strenemyx = "", strenemyy = "";
 		char x = 'x';
+		
 		//Output
 		String strserverx="",strservery="";
 		int tmpserverx=0,tmpservery=0;

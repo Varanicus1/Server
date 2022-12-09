@@ -16,28 +16,53 @@ public class MyServer {
 		ServerSocket ss = new ServerSocket(3333);
 		Socket s = ss.accept();
 		DataInputStream din = new DataInputStream(s.getInputStream());
+		DataOutputStream dout=new DataOutputStream(s.getOutputStream());  
 
-		String str = "", strx = "", stry = "";
-		int vx=0, vy=0;
+		//Input
+		String strenemy = "", strenemyx = "", strenemyy = "";
 		char x = 'x';
+		//Output
+		String strserverx="",strservery="";
+		int tmpserverx=0,tmpservery=0;
 		
-		while (!strx.equals("stop")) {
-			str = din.readUTF();
-			if (x == str.charAt(0)) {
+		while (!strenemy.equals("stop")) {
+			
+			//Input
+			strenemy = din.readUTF();
+			if (x == strenemy.charAt(0)) {
 				
-				strx = str.substring(1);
-				vx=Integer.parseInt(strx);
-				Var.x=vx;
-				System.out.println("X: " + strx);
+				strenemyx = strenemy.substring(1);
+				Var.enemyx=Integer.parseInt(strenemyx);
+				
+				System.out.println("X: " + strenemyx);
 			} else {
-				stry = str.substring(1);
-				vy=Integer.parseInt(stry);
-				Var.y=vy;
-				System.out.println("Y: " + stry);
+				strenemyy = strenemy.substring(1);
+				Var.enemyy=Integer.parseInt(strenemyy);
+				System.out.println("Y: " + strenemyy);
 			}
 
+			//Output
+			strserverx = Integer.toString(Var.serverx);
+			strserverx = "x" + strserverx;
+			
+			if(tmpserverx != Var.serverx) {
+				dout.writeUTF(strserverx);
+				dout.flush();
+			}
+			tmpserverx=Var.serverx;
+			
+			strservery = Integer.toString(Var.servery);
+			strservery = "y" + strservery;
+			
+			if(tmpservery != Var.servery) {
+			dout.writeUTF(strservery);
+			dout.flush();
+			}
+			tmpservery=Var.servery;
+			
 		}
 		din.close();
+		dout.close();
 		s.close();
 		ss.close();
 	}
